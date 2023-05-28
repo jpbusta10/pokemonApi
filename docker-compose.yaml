@@ -11,7 +11,7 @@ services:
     volumes:
       - .:/app
     ports:
-      -3000:3000
+      - 3000:3000
     depends_on:
       - db
 
@@ -20,11 +20,19 @@ services:
   db:
     container_name: db
     image: postgres:latest
-    env_file:
+    restart: unless-stopped
+    env_file: 
       - .env
+    environment:
+       POSTGRES_USER: ${PG_USER}
+       POSTGRES_PASSWORD: ${PG_PASSWORD}
+       POSTGRES_DB: ${PG_DATABASE}
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./src/db/schemas/pokemon.sql:/docker-entrypoint-initdb.d/pokemon.sql
     ports:
-      - 5432:5432
+      - "5432:5432"
     
+volumes:
+  db-data:
+
