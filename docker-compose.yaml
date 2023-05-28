@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      -3000:3000
+    depends_on:
+      - db
+
+    command: sh -c "npm install && npm start"
+
+  db:
+    container_name: db
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./src/db/schemas/pokemon.sql:/docker-entrypoint-initdb.d/pokemon.sql
+    ports:
+      - 5432:5432
+    
