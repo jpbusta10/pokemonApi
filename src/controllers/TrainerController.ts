@@ -1,5 +1,7 @@
 import TrainerRepository from '../repositories/TrainerRepository';
 import express from 'express';
+import TrainerDTO from '../dtos/TrainerDTO';
+import PokemonDto from '../dtos/PokemonDto';
 
 export default class TrainerController{
     private trainerRepository : TrainerRepository;
@@ -17,17 +19,27 @@ export default class TrainerController{
         }
     };
 
-    create = async (req : express.Request, res : express.Response) => {
+    create = async (req: express.Request, res: express.Response) => {
         const trainer = req.body;
-        try{
-            const trainerId = await this.trainerRepository.create(trainer);
-            res.status(201).json(trainerId);
+        const trainerName = trainer.trainer_name;
+        let myPokemons: PokemonDto[] = [];
+      
+        for (let i = 0; i < trainer.pokemons.length; i++) {
+          const pokemon = trainer.pokemons[i];
+          const newPokemon = new PokemonDto(0, pokemon, "", 0, []);
+          myPokemons.push(newPokemon);
         }
-        catch(err){
-            res.status(500).json(err);
+      
+        const newTrainer = new TrainerDTO(trainerName, myPokemons);
+        try {
+          const trainerId: number | null = await this.trainerRepository.create(newTrainer);
+          res.status(201).json(trainerId);
+        } catch (err) {
+          console.log(err); //debug
+          res.status(500).json(err);
         }
-    };
-
+      };
+      
     read = async (req : express.Request, res : express.Response) => {
         const trainerId = parseInt(req.params.trainerId);
         try{

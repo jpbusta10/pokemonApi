@@ -2,33 +2,39 @@ import {pool} from '../db/dataBase';
 import TrainerDTO from '../dtos/TrainerDTO';
 
 export default class TrainerRepository{
-    create = async (trainer : TrainerDTO) : Promise<number> => {
+    create = async (trainer: TrainerDTO): Promise<number> => {
         const trainerQuery = 'INSERT INTO trainers (trainer_name) VALUES ($1) RETURNING trainer_id';
         const values = [trainer.TrainerName];
-        //look for pokemon id 
         const pokemonQuery = 'SELECT pokemon_id FROM pokemons WHERE pokemon_name = $1';
-        const pokemon_trainerQuery = 'INSERT INTO pokemons_trainers (pokemon_id, trainer_id) VALUES ($1, $2) RETURNING trainer_id';
-        try{
-            const trainerResult = await pool.query(trainerQuery, values);
-            const trainerId = trainerResult.rows[0].trainer_id;
-            for(let i = 0; i < trainer.Pokemons.length; i++){
-                const pokemonName = trainer.Pokemons[i];
-                const pokemonValues = [pokemonName];
-                const pokemonResult = await pool.query(pokemonQuery, pokemonValues);
-                const pokemonId = pokemonResult.rows[0].pokemon_id;
-                const pokemon_trainerValues = [pokemonId, trainerId];
-                await pool.query(pokemon_trainerQuery, pokemon_trainerValues);
-            }
-            return trainerId;
+        const pokemon_trainerQuery = 'INSERT INTO trainers_pokemons (pokemon_id, trainer_id) VALUES ($1, $2) RETURNING trainer_id';
+      
+        try {
+          const trainerResult = await pool.query(trainerQuery, values);
+          const trainerId = trainerResult.rows[0].trainer_id;
+      
+          for (let i = 0; i < trainer.Pokemons.length; i++) {
+            const pokemonName: string = trainer.Pokemons[i].Name;
+            console.log(pokemonName); //debug
+            const pokemonValues = [pokemonName];
+            console.log("query for pokemons.."); //debug
+            const pokemonResult = await pool.query(pokemonQuery, pokemonValues);
+            const pokemonId = pokemonResult.rows[0].pokemon_id;
+            console.log(pokemonId); //debug
+            const pokemon_trainerValues = [pokemonId, trainerId];
+    
+            await pool.query(pokemon_trainerQuery, pokemon_trainerValues);
+          }
+      
+          return trainerId;
+        } catch (err) {
+          throw err;
         }
-        catch(err){
-            throw err;
-        }
-    };
+      };
+      
     read = async (trainerId : number) : Promise<TrainerDTO> => {
         const trainerQuery = 'SELECT * FROM trainers WHERE trainer_id = $1';
         const values = [trainerId];
-        const pokemonQuery = 'SELECT pokemon_name FROM pokemons WHERE pokemon_id IN (SELECT pokemon_id FROM pokemons_trainers WHERE trainer_id = $1)';
+        const pokemonQuery = 'SELECT pokemon_name FROM pokemons WHERE pokemon_id IN (SELECT pokemon_id FROM trainers_pokemons WHERE trainer_id = $1)';
         try{
             const trainerResult = await pool.query(trainerQuery, values);
             const trainer = trainerResult.rows[0];
@@ -40,11 +46,11 @@ export default class TrainerRepository{
             throw err;
         }
     };
-    update = async (trainer : TrainerDTO) : Promise<number> => {
+    update = async (trainer : TrainerDTO) : Promise<number|undefined> => {
         const trainerQuery = 'UPDATE trainers SET trainer_name = $1 WHERE trainer_id = $2';
         const values = [trainer.TrainerName, trainer.TrainerId];
         const pokemonQuery = 'SELECT pokemon_id FROM pokemons WHERE pokemon_name = $1';
-        const pokemon_trainerQuery = 'UPDATE pokemons_trainers SET pokemon_id = $1 WHERE trainer_id = $2';
+        const pokemon_trainerQuery = 'UPDATE trainers_pokemons SET pokemon_id = $1 WHERE trainer_id = $2';
         try{
             await pool.query(trainerQuery, values);
             for(let i = 0; i < trainer.Pokemons.length; i++){
@@ -74,7 +80,7 @@ export default class TrainerRepository{
     };
     getAll = async () : Promise<TrainerDTO[]> => {
         const trainerQuery = 'SELECT * FROM trainers';
-        const pokemonQuery = 'SELECT pokemon_name FROM pokemons WHERE pokemon_id IN (SELECT pokemon_id FROM pokemons_trainers WHERE trainer_id = $1)';
+        const pokemonQuery = 'SELECT pokemon_name FROM pokemons WHERE pokemon_id IN (SELECT pokemon_id FROM trainers_pokemons WHERE trainer_id = $1)';
         try{
             const trainerResult = await pool.query(trainerQuery);
             const trainers = trainerResult.rows;
