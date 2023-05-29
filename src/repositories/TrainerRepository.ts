@@ -14,12 +14,9 @@ export default class TrainerRepository{
       
           for (let i = 0; i < trainer.Pokemons.length; i++) {
             const pokemonName: string = trainer.Pokemons[i].Name;
-            console.log(pokemonName); //debug
             const pokemonValues = [pokemonName];
-            console.log("query for pokemons.."); //debug
             const pokemonResult = await pool.query(pokemonQuery, pokemonValues);
             const pokemonId = pokemonResult.rows[0].pokemon_id;
-            console.log(pokemonId); //debug
             const pokemon_trainerValues = [pokemonId, trainerId];
     
             await pool.query(pokemon_trainerQuery, pokemon_trainerValues);
