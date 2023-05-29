@@ -42,7 +42,9 @@ export default class PokemonRepository {
         const pokemonQuery = 'INSERT INTO pokemons (pokemon_name, pokemon_type, pokemon_level) VALUES ($1, $2, $3) RETURNING pokemon_id';
         const values = [pokemon.Name, pokemon.Type, pokemon.Level];
 
-        const abilitiesQuery = 'INSERT INTO abilities (ability_name) VALUES ($1) RETURNING ability_id';
+        const abilitiesQuery = 'INSERT INTO abilities (ability_name) VALUES ($1) ON CONFLICT (ability_name) DO UPDATE SET ability_name = EXCLUDED.ability_name RETURNING ability_id';
+         // Insert into "pokemons_abilities" table
+         const pokemonAbilitiesQuery = 'INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES ($1, $2) RETURNING pokemon_id';
 
         try {
             const abilityIds: number[] = [];
@@ -58,9 +60,6 @@ export default class PokemonRepository {
             // Insert into "pokemons" table
             const pokemonResult = await pool.query(pokemonQuery, values);
             const pokemonId = pokemonResult.rows[0].pokemon_id;
-
-            // Insert into "pokemons_abilities" table
-            const pokemonAbilitiesQuery = 'INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES ($1, $2) RETURNING pokemon_id';
 
             for (const abilityId of abilityIds) {
                 const pokemonAbilitiesValues = [pokemonId, abilityId];

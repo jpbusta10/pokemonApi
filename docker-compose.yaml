@@ -29,6 +29,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./src/db/schemas/pokemon.sql:/docker-entrypoint-initdb.d/pokemon.sql
+      - ./src/db/schemas/populate_pokemons.sql:/docker-entrypoint-initdb.d/populate_pokemons.sql
     ports:
       - "5432:5432"
     
