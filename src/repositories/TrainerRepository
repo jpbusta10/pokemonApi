@@ -1,0 +1,28 @@
+import {pool} from '../db/dataBase';
+import TrainerDTO from '../dtos/TrainerDto';
+
+export default class TrainerRepository{
+    create = async (trainer : TrainerDTO) : Promise<number> => {
+        const trainerQuery = 'INSERT INTO trainers (trainer_name) VALUES ($1) RETURNING trainer_id';
+        const values = [trainer.TrainerName];
+        //look for pokemon id 
+        const pokemonQuery = 'SELECT pokemon_id FROM pokemons WHERE pokemon_name = $1';
+        const pokemon_trainerQuery = 'INSERT INTO pokemons_trainers (pokemon_id, trainer_id) VALUES ($1, $2) RETURNING trainer_id';
+        try{
+            const trainerResult = await pool.query(trainerQuery, values);
+            const trainerId = trainerResult.rows[0].trainer_id;
+            for(let i = 0; i < trainer.Pokemons.length; i++){
+                const pokemonName = trainer.Pokemons[i];
+                const pokemonValues = [pokemonName];
+                const pokemonResult = await pool.query(pokemonQuery, pokemonValues);
+                const pokemonId = pokemonResult.rows[0].pokemon_id;
+                const pokemon_trainerValues = [pokemonId, trainerId];
+                await pool.query(pokemon_trainerQuery, pokemon_trainerValues);
+            }
+            return trainerId;
+        }
+        catch(err){
+            throw err;
+        }
+    }
+}
