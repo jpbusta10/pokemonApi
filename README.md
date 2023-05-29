@@ -2,7 +2,7 @@
 
 ## Introduction:
 
-This is a rest api to manaje a pokemon game. This project is ment for a univercity proyect where Im making a basic pokemon game.
+This is a rest api to manage a pokemon game. This project is meant for a university project where Im making a basic pokemon game.
 
 ## installing the project 
 
@@ -19,7 +19,7 @@ you will now have the server running on port 3000
 ## FUNCTIONALITIES 
 
 at this moment this api has the ability to return an array of pokemon in json,
-it can also add new pokemons to the database and delete them. In the future Im adding functionalities for pokemon trainers.
+it can also add new pokemon to the database and delete them. In the future Im adding functionalities for pokemon trainers.
 
 ## BUILT WITH
 - node.js
