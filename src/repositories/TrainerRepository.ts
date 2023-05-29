@@ -1,5 +1,5 @@
 import {pool} from '../db/dataBase';
-import TrainerDTO from '../dtos/TrainerDto';
+import TrainerDTO from '../dtos/TrainerDTO';
 
 export default class TrainerRepository{
     create = async (trainer : TrainerDTO) : Promise<number> => {
@@ -91,5 +91,5 @@ export default class TrainerRepository{
         catch(err){
             throw err;
         }
-    }
+    };
 }
