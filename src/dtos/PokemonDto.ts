@@ -3,15 +3,19 @@ import exp from "constants";
 class PokemonDto{
     id: number;
     name: string;
-    type: string;
+    type1: string;
+    type2: string;
     level: number;
     abilities: string[];
-    constructor(id: number, name: string, type: string, level: number, abilities: string[]){
+    id_evolution: number;
+    constructor(id: number, name: string, type: string, type2: string, level: number, abilities: string[], id_evolution: number){
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.type1 = type;
+        this.type2 = type2;
         this.level = level;
         this.abilities = abilities;
+        this.id_evolution = id_evolution;
     }
     public get Id(): number{
         return this.id;
@@ -25,11 +29,17 @@ class PokemonDto{
     public set Name(name: string){
         this.name = name;
     }
-    public get Type(): string{
-        return this.type;
+    public get Type1(): string{
+        return this.type1;
     }
-    public set Type(type: string){
-        this.type = type;
+    public set Type1(type: string){
+        this.type1 = type;
+    }
+    public get Type2(): string{
+        return this.type2;
+    }
+    public set Type2(type2: string){
+        this.type2 = type2;
     }
     public get Level(): number{
         return this.level;
@@ -43,6 +53,13 @@ class PokemonDto{
     public set Abilities(abilities: string[]){
         this.abilities = abilities;
     }
+    public get Id_evolution(): number{
+        return this.id_evolution;
+    }
+    public set Id_evolution(id_evolution: number){
+        this.id_evolution = id_evolution;
+    }
+
 }
 
 export default PokemonDto;

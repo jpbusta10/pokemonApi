@@ -10,5 +10,5 @@ router.get('/pokemons/:name', pokemonController.getPokemonByName);
 router.post('/create/pokemon', pokemonController.createPokemon);
 router.put('/update/pokemons', pokemonController.updatePokemon);
 router.delete('/delete/pokemons/:id', pokemonController.deletePokemon);
-
+router.get('/pokemons/random/:type', pokemonController.getPokemonRandomByType);
 export default router;
