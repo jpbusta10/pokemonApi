@@ -11,7 +11,7 @@ export default class PokemonRepository {
             pokemons.pokemon_type1,
             pokemons.pokemon_type2,
             pokemons.pokemon_level,
-            pokemons.id_evolution,
+            pokemons.pokemon_evolution_id,
             array_agg(abilities.ability_name) AS abilities
           FROM
             pokemons
@@ -102,19 +102,32 @@ export default class PokemonRepository {
             const res2 = await pool.query(abilitiesQuery, abilitiesValue);
             return res.rows[0].id;
         }
-        catch (err) {
-            throw new Error('unable to delete pokemon: ${err.message}');
+        catch (err: any) {
+            throw new Error('unable to delete pokemon: ${type}: ${err.message}');
         }
     };
-    public async getPokemonsRandomByType(type: string): Promise<PokemonDTO[]> {
-        const queryText = 'SELECT * FROM pokemons WERE pokemon_type1 = $1 OR pokemon_type2 = $1 ORDER BY RANDOM() LIMIT 3';
+    ///select one pokemon random by type
+    public async getPokemonRandomByType(type: string): Promise<PokemonDTO> {
+        const queryText = 'SELECT p.*, a.ability_name \
+                           FROM pokemons p \
+                           INNER JOIN pokemons_abilities pa ON p.pokemon_id = pa.pokemon_id \
+                           INNER JOIN abilities a ON pa.ability_id = a.ability_id \
+                           WHERE p.pokemon_type1 = $1 OR p.pokemon_type2 = $1 \
+                           ORDER BY RANDOM() LIMIT 1';
         const value = [type];
         try {
-            const res = await pool.query(queryText, value);
-            return res.rows.map((row) => new PokemonDTO(row.id, row.name, row.type1, row.type2, row.level, row.abilities, row.id_evolution));
+          const res = await pool.query(queryText, value);
+          const row = res.rows[0];
+          if (!row) {
+            throw new Error('No Pokémon found for the specified type.');
+          }
+          const abilities = res.rows.map((row) => row.ability_name);
+          return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.id_evolution);
+        } catch (err: any) {
+          throw new Error(`Unable to get Pokémon by type ${type}: ${err.message}`);
         }
-        catch (err) {
-            throw new Error('unable to get pokemon: ${err.message}');
-        }
-    };
-}
+      };
+      
+      
+      
+} 

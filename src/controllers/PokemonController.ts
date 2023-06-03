@@ -57,11 +57,11 @@ export default class PokemonController{
     };
     getPokemonRandomByType = async (req: Request, res: Response) => {
         try{
-            const pokemon = await this.pokemonRepository.getPokemonsRandomByType(req.params.type);
+            const pokemon: PokemonDTO = await this.pokemonRepository.getPokemonRandomByType(req.params.type);
             res.status(200).json(pokemon);
         }
         catch(err: any){
             res.status(500).json({message: "unable to get random pokemon", error: err.message});
         }
-    }
+    };
 }

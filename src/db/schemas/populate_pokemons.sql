@@ -80,56 +80,58 @@ INSERT INTO pokemons (pokemon_name, pokemon_type1, pokemon_type2, pokemon_level,
     ('Rapidash', 'Fire', NULL, 40, NULL);
 
 -- Populating the abilities table
+-- Populating the abilities table
 INSERT INTO abilities (ability_name) VALUES
-    ('Overgrow'),
-    ('Chlorophyll'),
-    ('Blaze'),
-    ('Solar Power'),
-    ('Torrent'),
-    ('Rain Dish'),
-    ('Shield Dust'),
-    ('Run Away'),
-    ('Keen Eye'),
-    ('Tangled Feet'),
-    ('Static'),
-    ('Sand Veil'),
-    ('Poison Point'),
-    ('Rivalry'),
-    ('Intimidate'),
-    ('Guts'),
-    ('Lightning Rod'),
-    ('Cute Charm'),
-    ('Flash Fire'),
-    ('Drought'),
-    ('Compound Eyes'),
-    ('Tinted Lens'),
-    ('Synchronize'),
-    ('Inner Focus'),
-    ('Stench'),
-    ('Sticky Hold'),
-    ('Poison Touch'),
-    ('Levitate'),
-    ('Illuminate'),
-    ('Volt Absorb'),
-    ('Water Absorb'),
-    ('Thick Fat'),
-    ('Early Bird'),
-    ('Limber'),
-    ('Own Tempo'),
-    ('Insomnia'),
-    ('Oblivious'),
-    ('Technician'),
-    ('Super Luck'),
-    ('Swarm'),
-    ('Speed Boost'),
-    ('Arena Trap'),
-    ('Sand Stream'),
-    ('Rock Head'),
-    ('Sturdy'),
-    ('Damp'),
-    ('Water Veil'),
-    ('Soundproof'),
-    ('Scrappy');
+    ('Overgrow'),           -- ID: 1
+    ('Chlorophyll'),        -- ID: 2
+    ('Blaze'),              -- ID: 3
+    ('Solar Power'),        -- ID: 4
+    ('Torrent'),            -- ID: 5
+    ('Rain Dish'),          -- ID: 6
+    ('Shield Dust'),        -- ID: 7
+    ('Run Away'),           -- ID: 8
+    ('Keen Eye'),           -- ID: 9
+    ('Tangled Feet'),       -- ID: 10
+    ('Static'),             -- ID: 11
+    ('Sand Veil'),          -- ID: 12
+    ('Poison Point'),       -- ID: 13
+    ('Rivalry'),            -- ID: 14
+    ('Intimidate'),         -- ID: 15
+    ('Guts'),               -- ID: 16
+    ('Lightning Rod'),      -- ID: 17
+    ('Cute Charm'),         -- ID: 18
+    ('Flash Fire'),         -- ID: 19
+    ('Drought'),            -- ID: 20
+    ('Compound Eyes'),      -- ID: 21
+    ('Tinted Lens'),        -- ID: 22
+    ('Synchronize'),        -- ID: 23
+    ('Inner Focus'),        -- ID: 24
+    ('Stench'),             -- ID: 25
+    ('Sticky Hold'),        -- ID: 26
+    ('Poison Touch'),       -- ID: 27
+    ('Levitate'),           -- ID: 28
+    ('Illuminate'),         -- ID: 29
+    ('Volt Absorb'),        -- ID: 30
+    ('Water Absorb'),       -- ID: 31
+    ('Thick Fat'),          -- ID: 32
+    ('Early Bird'),         -- ID: 33
+    ('Limber'),             -- ID: 34
+    ('Own Tempo'),          -- ID: 35
+    ('Insomnia'),           -- ID: 36
+    ('Oblivious'),          -- ID: 37
+    ('Technician'),         -- ID: 38
+    ('Super Luck'),         -- ID: 39
+    ('Swarm'),              -- ID: 40
+    ('Speed Boost'),        -- ID: 41
+    ('Arena Trap'),         -- ID: 42
+    ('Sand Stream'),        -- ID: 43
+    ('Rock Head'),          -- ID: 44
+    ('Sturdy'),             -- ID: 45
+    ('Damp'),               -- ID: 46
+    ('Water Veil'),         -- ID: 47
+    ('Soundproof'),         -- ID: 48
+    ('Scrappy'),            -- ID: 49
+    ('sand veil');          -- ID: 50
 
 -- Populating the pokemons_abilities table
 INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
@@ -237,4 +239,4 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
     -- Diglett
     (50, 50), -- Sand Veil
     -- Dugtrio
-    (51, 50), -- Sand Veil
+    (51, 50); -- Sand Veil
