@@ -10,8 +10,10 @@ CREATE TABLE users (
 CREATE TABLE pokemons (
     pokemon_id SERIAL PRIMARY KEY,
     pokemon_name VARCHAR(255) UNIQUE NOT NULL,
-    pokemon_type VARCHAR(255) NOT NULL,
-    pokemon_level INT NOT NULL
+    pokemon_type1 VARCHAR(255) NOT NULL,
+    pokemon_type2 VARCHAR(255),
+    pokemon_level INT NOT NULL,
+    pokemon_evolution_id INT
 );
 
 CREATE TABLE abilities(

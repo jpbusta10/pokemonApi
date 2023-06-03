@@ -8,8 +8,10 @@ export default class PokemonRepository {
           SELECT
             pokemons.pokemon_id,
             pokemons.pokemon_name,
-            pokemons.pokemon_type,
+            pokemons.pokemon_type1,
+            pokemons.pokemon_type2,
             pokemons.pokemon_level,
+            pokemons.pokemon_evolution_id,
             array_agg(abilities.ability_name) AS abilities
           FROM
             pokemons
@@ -20,7 +22,7 @@ export default class PokemonRepository {
         `;
         try {
             const res = await pool.query(queryText);
-            return res.rows.map((row) => new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type, row.pokemon_level, row.abilities));
+            return res.rows.map((row) => new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, row.abilities, row.id_evolution));
         } catch (err) {
             throw new Error(`Unable to get all pokemons`);
         }
@@ -32,7 +34,7 @@ export default class PokemonRepository {
         const value = [name];
         try {
             const res = await pool.query(queryText, value);
-            return new PokemonDTO(res.rows[0].id, res.rows[0].name, res.rows[0].type, res.rows[0].level, [res.rows[0].ability_name]);
+            return new PokemonDTO(res.rows[0].id, res.rows[0].name, res.rows[0].type1, res.rows[0].type2, res.rows[0].level, res.rows[0].abilities, res.rows[0].id_evolution);
         }
         catch (err) {
             throw new Error('unable to get pokemon: ${err.message}');
@@ -40,7 +42,7 @@ export default class PokemonRepository {
     };
     public async create(pokemon: PokemonDTO): Promise<number> {
         const pokemonQuery = 'INSERT INTO pokemons (pokemon_name, pokemon_type, pokemon_level) VALUES ($1, $2, $3) RETURNING pokemon_id';
-        const values = [pokemon.Name, pokemon.Type, pokemon.Level];
+        const values = [pokemon.Name, pokemon.Type1, pokemon.type2, pokemon.Level];
 
         const abilitiesQuery = 'INSERT INTO abilities (ability_name) VALUES ($1) ON CONFLICT (ability_name) DO UPDATE SET ability_name = EXCLUDED.ability_name RETURNING ability_id';
          // Insert into "pokemons_abilities" table
@@ -77,7 +79,7 @@ export default class PokemonRepository {
 
     public async update(pokemon: PokemonDTO): Promise<number> {
         const queryText = 'UPDATE pokemons SET name = $1, type = $2, level = $3 WHERE id = $4 RETURNING *';
-        const values = [pokemon.Name, pokemon.Type, pokemon.Level, pokemon.Id];
+        const values = [pokemon.Name, pokemon.Type1, pokemon.Type2, pokemon.Level, pokemon.Id];
         //fist check if abiliety exists then update or create if not exist
         const abilitiesQuery = 'INSERT INTO abilities (ability_name) VALUES ($1) ON CONFLICT (ability_name) DO UPDATE SET ability_name = $1 RETURNING *';
         const abilitiesValues = [pokemon.Abilities[0], pokemon.Id];
@@ -100,8 +102,32 @@ export default class PokemonRepository {
             const res2 = await pool.query(abilitiesQuery, abilitiesValue);
             return res.rows[0].id;
         }
-        catch (err) {
-            throw new Error('unable to delete pokemon: ${err.message}');
+        catch (err: any) {
+            throw new Error('unable to delete pokemon: ${type}: ${err.message}');
         }
-    }
-}
+    };
+    ///select one pokemon random by type
+    public async getPokemonRandomByType(type: string): Promise<PokemonDTO> {
+        const queryText = 'SELECT p.*, a.ability_name \
+                           FROM pokemons p \
+                           INNER JOIN pokemons_abilities pa ON p.pokemon_id = pa.pokemon_id \
+                           INNER JOIN abilities a ON pa.ability_id = a.ability_id \
+                           WHERE p.pokemon_type1 = $1 OR p.pokemon_type2 = $1 \
+                           ORDER BY RANDOM() LIMIT 1';
+        const value = [type];
+        try {
+          const res = await pool.query(queryText, value);
+          const row = res.rows[0];
+          if (!row) {
+            throw new Error('No Pokémon found for the specified type.');
+          }
+          const abilities = res.rows.map((row) => row.ability_name);
+          return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.id_evolution);
+        } catch (err: any) {
+          throw new Error(`Unable to get Pokémon by type ${type}: ${err.message}`);
+        }
+      };
+      
+      
+      
+} 

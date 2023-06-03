@@ -27,7 +27,7 @@ export default class PokemonController{
     };
     createPokemon = async (req: Request, res: Response) => {
         try{
-            const pokemon = new PokemonDTO(req.body.id, req.body.name, req.body.type, req.body.level, req.body.abilities);
+            const pokemon = new PokemonDTO(req.body.id, req.body.name, req.body.type1, req.body.type2, req.body.level, req.body.abilities, req.body.id_evolution);
             const id = await this.pokemonRepository.create(pokemon);
             res.status(200).json({message: "pokemon created", id: id});
         }
@@ -37,7 +37,7 @@ export default class PokemonController{
     };
     updatePokemon = async (req: Request, res: Response) => {
         try{
-            const pokemon = new PokemonDTO(req.body.id, req.body.name, req.body.type, req.body.level, req.body.abilities);
+            const pokemon = new PokemonDTO(req.body.id, req.body.name, req.body.type1, req.body.type2, req.body.level, req.body.abilities, req.body.id_evolution);
             const id = await this.pokemonRepository.update(pokemon);
             res.status(200).json({message: "pokemon updated", id: id});
         }
@@ -55,6 +55,13 @@ export default class PokemonController{
             res.status(500).json({message: "unable to delete pokemon", error: err.message});
         }
     };
-
-
+    getPokemonRandomByType = async (req: Request, res: Response) => {
+        try{
+            const pokemon: PokemonDTO = await this.pokemonRepository.getPokemonRandomByType(req.params.type);
+            res.status(200).json(pokemon);
+        }
+        catch(err: any){
+            res.status(500).json({message: "unable to get random pokemon", error: err.message});
+        }
+    };
 }

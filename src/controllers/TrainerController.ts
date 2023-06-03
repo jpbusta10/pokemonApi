@@ -26,7 +26,7 @@ export default class TrainerController{
       
         for (let i = 0; i < trainer.pokemons.length; i++) {
           const pokemon = trainer.pokemons[i];
-          const newPokemon = new PokemonDto(0, pokemon, "", 0, []);
+          const newPokemon = new PokemonDto(0, pokemon, "", "", 0, [], 0);
           myPokemons.push(newPokemon);
         }
       

@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.2"
 
 services:
   app:
@@ -26,6 +26,7 @@ services:
        POSTGRES_USER: ${PG_USER}
        POSTGRES_PASSWORD: ${PG_PASSWORD}
        POSTGRES_DB: ${PG_DATABASE}
+       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./src/db/schemas/pokemon.sql:/docker-entrypoint-initdb.d/pokemon.sql
