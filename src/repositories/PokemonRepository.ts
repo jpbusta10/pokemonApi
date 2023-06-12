@@ -108,12 +108,14 @@ export default class PokemonRepository {
     };
     ///select one pokemon random by type
     public async getPokemonRandomByType(type: string): Promise<PokemonDTO> {
-        const queryText = 'SELECT p.*, a.ability_name \
+        const queryText = 'SELECT p.*, ARRAY_AGG(a.ability_name) AS abilities \
                            FROM pokemons p \
                            INNER JOIN pokemons_abilities pa ON p.pokemon_id = pa.pokemon_id \
                            INNER JOIN abilities a ON pa.ability_id = a.ability_id \
                            WHERE p.pokemon_type1 = $1 OR p.pokemon_type2 = $1 \
-                           ORDER BY RANDOM() LIMIT 1';
+                           GROUP BY p.pokemon_id \
+                           ORDER BY RANDOM() \
+                           LIMIT 1';
         const value = [type];
         try {
           const res = await pool.query(queryText, value);
@@ -121,12 +123,13 @@ export default class PokemonRepository {
           if (!row) {
             throw new Error('No Pokémon found for the specified type.');
           }
-          const abilities = res.rows.map((row) => row.ability_name);
-          return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.id_evolution);
+          const abilities = row.abilities || []; // Store the abilities in an array
+          return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
         } catch (err: any) {
           throw new Error(`Unable to get Pokémon by type ${type}: ${err.message}`);
         }
       };
+      
       
       
       

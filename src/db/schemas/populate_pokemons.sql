@@ -131,7 +131,9 @@ INSERT INTO abilities (ability_name) VALUES
     ('Water Veil'),         -- ID: 47
     ('Soundproof'),         -- ID: 48
     ('Scrappy'),            -- ID: 49
-    ('sand veil');          -- ID: 50
+    ('Thunder'),            -- ID: 50
+    ('Effect Spore');       -- ID: 51
+         
 
 -- Populating the pokemons_abilities table
 INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
@@ -157,13 +159,13 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
     -- Blastoise
     (9, 5), -- Torrent
     -- Caterpie
-    (10, 11), -- Shield Dust
+    (10, 7), -- Shield Dust
     -- Metapod
-    (11, 11), -- Shed Skin
+    (11, 7), -- Shed Skin
     -- Butterfree
     (12, 11), -- Compound Eyes
     -- Weedle
-    (13, 14), -- Shield Dust
+    (13, 7), -- Shield Dust
     -- Kakuna
     (14, 14), -- Shed Skin
     -- Beedrill
@@ -187,56 +189,58 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
     -- Arbok
     (24, 24), -- Intimidate
     -- Pikachu
-    (25, 26), -- Static
+    (25, 11), -- Static
+    (25, 50),  --thunder
     -- Raichu
-    (26, 26), -- Static
+    (26, 11), -- Static
+    (26, 50), --thunder
     -- Sandshrew
-    (27, 28), -- Sand Veil
+    (27, 12), -- Sand Veil
     -- Sandslash
-    (28, 28), -- Sand Veil
+    (28, 12), -- Sand Veil
     -- Nidoran♀
-    (29, 30), -- Poison Point
+    (29, 13), -- Poison Point
     -- Nidorina
-    (30, 30), -- Poison Point
+    (30, 13), -- Poison Point
     -- Nidoqueen
-    (31, 30), -- Poison Point
+    (31, 13), -- Poison Point
     -- Nidoran♂
-    (32, 33), -- Poison Point
+    (32, 13), -- Poison Point
     -- Nidorino
-    (33, 33), -- Poison Point
+    (33, 13), -- Poison Point
     -- Nidoking
-    (34, 33), -- Poison Point
+    (34, 13), -- Poison Point
     -- Clefairy
-    (35, 35), -- Cute Charm
+    (35, 18), -- Cute Charm
     -- Clefable
-    (36, 35), -- Cute Charm
+    (36, 18), -- Cute Charm
     -- Vulpix
-    (37, 37), -- Flash Fire
+    (37, 19), -- Flash Fire
     -- Ninetales
-    (38, 37), -- Flash Fire
+    (38, 19), -- Flash Fire
     -- Jigglypuff
-    (39, 39), -- Cute Charm
+    (39, 18), -- Cute Charm
     -- Wigglytuff
-    (40, 39), -- Cute Charm
+    (40, 18), -- Cute Charm
     -- Zubat
-    (41, 41), -- Inner Focus
+    (41, 24), -- Inner Focus
     -- Golbat
-    (42, 41), -- Inner Focus
+    (42, 24), -- Inner Focus
     -- Oddish
-    (43, 43), -- Chlorophyll
+    (43, 2), -- Chlorophyll
     -- Gloom
-    (44, 43), -- Chlorophyll
+    (44, 2), -- Chlorophyll
     -- Vileplume
-    (45, 43), -- Chlorophyll
+    (45, 2), -- Chlorophyll
     -- Paras
-    (46, 46), -- Effect Spore
+    (46, 51), -- Effect Spore
     -- Parasect
-    (47, 46), -- Effect Spore
+    (47, 51), -- Effect Spore
     -- Venonat
     (48, 48), -- Compound Eyes
     -- Venomoth
     (49, 48), -- Compound Eyes
     -- Diglett
-    (50, 50), -- Sand Veil
+    (50, 12), -- Sand Veil
     -- Dugtrio
-    (51, 50); -- Sand Veil
+    (51, 12); -- Sand Veil
