@@ -121,7 +121,9 @@ export default class PokemonRepository {
                 throw new Error('no pokemon find with that id')
             }
             const abilities = row.abilities || [];
-            return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.Pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
+            console.log('database');
+            console.log(row);
+            return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
         }
         catch(err: any){
             throw new Error(`Unable to get Pokémon by id ${id}: ${err.message}`);

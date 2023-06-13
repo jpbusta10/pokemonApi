@@ -68,7 +68,9 @@ export default class PokemonController{
         const pokemonId: number = parseInt(req.params.id)
         try{
             const pokemon: PokemonDTO = await this.pokemonRepository.getPokemonByid(pokemonId)
-            res.status(200).json({pokemon});
+            console.log('controller');
+            console.log(pokemon);
+            res.status(200).json(pokemon);
         }
         catch(err: any){
             res.status(500).json({message: "unable to get pokemon by id", error: err.message});
