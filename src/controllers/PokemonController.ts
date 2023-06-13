@@ -64,4 +64,14 @@ export default class PokemonController{
             res.status(500).json({message: "unable to get random pokemon", error: err.message});
         }
     };
+    getPokemonById = async (req: Request, res: Response) => {
+        const pokemonId: number = parseInt(req.params.id)
+        try{
+            const pokemon: PokemonDTO = await this.pokemonRepository.getPokemonByid(pokemonId)
+            res.status(200).json({pokemon});
+        }
+        catch(err: any){
+            res.status(500).json({message: "unable to get pokemon by id", error: err.message});
+        }
+    }
 }

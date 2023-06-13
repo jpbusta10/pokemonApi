@@ -45,13 +45,13 @@ export default class PokemonRepository {
         const values = [pokemon.Name, pokemon.Type1, pokemon.type2, pokemon.Level];
 
         const abilitiesQuery = 'INSERT INTO abilities (ability_name) VALUES ($1) ON CONFLICT (ability_name) DO UPDATE SET ability_name = EXCLUDED.ability_name RETURNING ability_id';
-         // Insert into "pokemons_abilities" table
-         const pokemonAbilitiesQuery = 'INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES ($1, $2) RETURNING pokemon_id';
+        // Insert into "pokemons_abilities" table
+        const pokemonAbilitiesQuery = 'INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES ($1, $2) RETURNING pokemon_id';
 
         try {
             const abilityIds: number[] = [];
 
-            for (let i=0; i < pokemon.Abilities.length; i++) {
+            for (let i = 0; i < pokemon.Abilities.length; i++) {
                 const abilityName = pokemon.Abilities[i];
                 const abilityValues = [abilityName];
                 const abilityResult = await pool.query(abilitiesQuery, abilityValues);
@@ -106,6 +106,28 @@ export default class PokemonRepository {
             throw new Error('unable to delete pokemon: ${type}: ${err.message}');
         }
     };
+    public async getPokemonByid(id: number): Promise<PokemonDTO> {
+        const queryText = 'SELECT p.*, ARRAY_AGG(a.ability_name) AS abilities \
+        FROM pokemons p\
+        INNER JOIN pokemons_abilities pa ON p.pokemon_id = pa.pokemon_id \
+        INNER JOIN abilities a ON pa.ability_id = a.ability_id \
+        WHERE p.pokemon_id = $1\
+        GROUP BY p.pokemon_id'
+        const value = [id];
+        try{
+            const res = await pool.query(queryText, value);
+            const row = res.rows[0];
+            if(!row){
+                throw new Error('no pokemon find with that id')
+            }
+            const abilities = row.abilities || [];
+            return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.Pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
+        }
+        catch(err: any){
+            throw new Error(`Unable to get Pokémon by id ${id}: ${err.message}`);
+        }
+
+    }
     ///select one pokemon random by type
     public async getPokemonRandomByType(type: string): Promise<PokemonDTO> {
         const queryText = 'SELECT p.*, ARRAY_AGG(a.ability_name) AS abilities \
@@ -118,19 +140,19 @@ export default class PokemonRepository {
                            LIMIT 1';
         const value = [type];
         try {
-          const res = await pool.query(queryText, value);
-          const row = res.rows[0];
-          if (!row) {
-            throw new Error('No Pokémon found for the specified type.');
-          }
-          const abilities = row.abilities || []; // Store the abilities in an array
-          return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
+            const res = await pool.query(queryText, value);
+            const row = res.rows[0];
+            if (!row) {
+                throw new Error('No Pokémon found for the specified type.');
+            }
+            const abilities = row.abilities || []; // Store the abilities in an array
+            return new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, abilities, row.pokemon_evolution_id);
         } catch (err: any) {
-          throw new Error(`Unable to get Pokémon by type ${type}: ${err.message}`);
+            throw new Error(`Unable to get Pokémon by type ${type}: ${err.message}`);
         }
-      };
-      
-      
-      
-      
+    };
+
+
+
+
 } 
