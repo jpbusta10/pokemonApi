@@ -22,7 +22,7 @@ export default class PokemonRepository {
         `;
         try {
             const res = await pool.query(queryText);
-            return res.rows.map((row) => new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, row.abilities, row.id_evolution));
+            return res.rows.map((row) => new PokemonDTO(row.pokemon_id, row.pokemon_name, row.pokemon_type1, row.pokemon_type2, row.pokemon_level, row.abilities, row.pokemon_evolution_id));
         } catch (err) {
             throw new Error(`Unable to get all pokemons`);
         }
