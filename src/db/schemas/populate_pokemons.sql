@@ -78,31 +78,34 @@ INSERT INTO pokemons (pokemon_name, pokemon_type1, pokemon_type2, pokemon_level,
     ('Golem', 'Rock', 'Ground', 36, NULL),      --76
     ('Ponyta', 'Fire', NULL, 16, 77),           --77
     ('Rapidash', 'Fire', NULL, 40, NULL),       --78
-     ('Slowpoke', 'Water', 'Psychic', 63, 80),
-    ('Slowbro', 'Water', 'Psychic', 172, NULL),
-    ('Magnemite', 'Electric', 'Steel', 65, 82),
-    ('Magneton', 'Electric', 'Steel', 163, NULL),
-    ('Farfetch', 'Normal', 'Flying', 123, NULL),
-    ('Doduo', 'Normal', 'Flying', 62, 85),
-    ('Dodrio', 'Normal', 'Flying', 165, NULL),
-    ('Seel', 'Water', NULL, 65, 87),
-    ('Dewgong', 'Water', 'Ice', 166, NULL),
-    ('Grimer', 'Poison', NULL, 65, 89),
-    ('Muk', 'Poison', NULL, 175, NULL),
-    ('Shellder', 'Water', NULL, 61, 91),
-    ('Cloyster', 'Water', 'Ice', 184, NULL),
-    ('Gastly', 'Ghost', 'Poison', 62, 93),
-    ('Haunter', 'Ghost', 'Poison', 142, NULL),
-    ('Gengar', 'Ghost', 'Poison', 225, NULL),
-    ('Onix', 'Rock', 'Ground', 77, NULL),
-    ('Drowzee', 'Psychic', NULL, 66, 97),
-    ('Hypno', 'Psychic', NULL, 169, NULL),
-    ('Krabby', 'Water', NULL, 65, 99),
-    ('Kingler', 'Water', NULL, 166, NULL),
-    ('Voltorb', 'Electric', NULL, 66, 101),
-    ('Electrode', 'Electric', NULL, 168, NULL),
-    ('Exeggcute', 'Grass', 'Psychic', 65, 103),
-    ('Exeggutor', 'Grass', 'Psychic', 186, NULL);
+    ('Slowpoke', 'Water', 'Psychic', 63, 80),   --79    
+    ('Slowbro', 'Water', 'Psychic', 172, NULL), --80
+    ('Magnemite', 'Electric', 'Steel', 65, 82), --81
+    ('Magneton', 'Electric', 'Steel', 163, NULL),--82
+    ('Farfetch', 'Normal', 'Flying', 123, NULL), --83
+    ('Doduo', 'Normal', 'Flying', 62, 85),       --84
+    ('Dodrio', 'Normal', 'Flying', 165, NULL),   --85
+    ('Seel', 'Water', NULL, 65, 87),             --86
+    ('Dewgong', 'Water', 'Ice', 166, NULL),     --87
+    ('Grimer', 'Poison', NULL, 65, 89),         --88
+    ('Muk', 'Poison', NULL, 175, NULL),         --89
+    ('Shellder', 'Water', NULL, 61, 91),        --90
+    ('Cloyster', 'Water', 'Ice', 184, NULL),    --91
+    ('Gastly', 'Ghost', 'Poison', 62, 93),      --92
+    ('Haunter', 'Ghost', 'Poison', 142, NULL),  --93
+    ('Gengar', 'Ghost', 'Poison', 225, NULL),   --94
+    ('Onix', 'Rock', 'Ground', 77, NULL),       --95
+    ('Drowzee', 'Psychic', NULL, 66, 97),       --96
+    ('Hypno', 'Psychic', NULL, 169, NULL),      --97    
+    ('Krabby', 'Water', NULL, 65, 99),          --98
+    ('Kingler', 'Water', NULL, 166, NULL),      --99
+    ('Voltorb', 'Electric', NULL, 66, 101),     --100
+    ('Electrode', 'Electric', NULL, 168, NULL), --101
+    ('Exeggcute', 'Grass', 'Psychic', 65, 103), --102
+    ('Exeggutor', 'Grass', 'Psychic', 186, NULL),--103
+    ('Staryu', 'water', NULL, 15, 104),          --104
+    ('Starmie', 'water', NULL, 40, NULL);       --105
+
 
 -- Populating the abilities table
 -- Populating the abilities table
@@ -607,7 +610,13 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
 
 -- Exeggutor
 (103, 4),   -- Exeggutor has ability ID 4 (Chlorophyll)
-(103, 34);  -- Exeggutor has ability ID 34 (Harvest)
+(103, 34),  -- Exeggutor has ability ID 34 (Harvest)
+
+-- Staryu
+(104, 5),
+
+(105, 5),
+(105, 31);
 
 
 
