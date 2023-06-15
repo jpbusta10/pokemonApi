@@ -527,11 +527,11 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
 
 -- Magnemite
 (81, 29),   -- Magnemite has ability ID 29 (Magnet Pull)
-(81, 17),   -- Magnemite has ability ID 17 (Sturdy)
+(81, 45),   -- Magnemite has ability ID 17 (Sturdy)
 
 -- Magneton
 (82, 29),   -- Magneton has ability ID 29 (Magnet Pull)
-(82, 17),   -- Magneton has ability ID 17 (Sturdy)
+(82, 45),   -- Magneton has ability ID 17 (Sturdy)
 
 -- Farfetch
 (83, 9),    -- Farfetch has ability ID 9 (Keen Eye)
@@ -577,8 +577,8 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
 (94, 27),   -- Gengar has ability ID 27 (Levitate)
 
 -- Onix
-(95, 45),   -- Onix has ability ID 45 (Rock Head)
-(95, 33),   -- Onix has ability ID 33 (Sturdy)
+(95, 44),   -- Onix has ability ID 45 (Rock Head)
+(95, 45),   -- Onix has ability ID 33 (Sturdy)
 
 -- Drowzee
 (96, 36),   -- Drowzee has ability ID 36 (Insomnia)
@@ -597,8 +597,8 @@ INSERT INTO pokemons_abilities (pokemon_id, ability_id) VALUES
 (99, 54),   -- Kingler has ability ID 54 (Sheer Force)
 
 -- Voltorb
-(100, 30),  -- Voltorb has ability ID 30 (Soundproof)
-(100, 9),   -- Voltorb has ability ID 9 (Static)
+(100, 48),  -- Voltorb has ability ID 30 (Soundproof)
+(100, 11),   -- Voltorb has ability ID 9 (Static)
 
 -- Electrode
 (101, 30),  -- Electrode has ability ID 30 (Soundproof)
