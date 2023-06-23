@@ -94,7 +94,7 @@ INSERT INTO pokemons (pokemon_name, pokemon_type1, pokemon_type2, pokemon_level,
     ('Gastly', 'Ghost', 'Poison', 62, 93),      --92
     ('Haunter', 'Ghost', 'Poison', 142, NULL),  --93
     ('Gengar', 'Ghost', 'Poison', 225, NULL),   --94
-    ('Onix', 'Rock', 'Ground', 77, NULL),       --95
+    ('Onix', 'Rock', 'Ground', 20, NULL),       --95
     ('Drowzee', 'Psychic', NULL, 66, 97),       --96
     ('Hypno', 'Psychic', NULL, 169, NULL),      --97    
     ('Krabby', 'Water', NULL, 65, 99),          --98
